@@ -17,22 +17,40 @@
 
 package io.openvidu.server.cdr;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.openvidu.server.kurento.endpoint.KmsEvent;
 import io.openvidu.server.summary.SessionSummary;
+import io.openvidu.server.config.OpenviduConfig;
 
 public class CDRLoggerFile implements CDRLogger {
 
 	private Logger log = LoggerFactory.getLogger(CDRLoggerFile.class);
 
-	/**
-	 * This logs directly to the file thanks to logback configuration
-	 */
+	protected OpenviduConfig openviduConfig;
+
+	public CDRLoggerFile(OpenviduConfig openviduConfig) {
+		this.openviduConfig = openviduConfig;
+	}
+
 	@Override
 	public void log(CDREvent event) {
-		log.info("{}", event);
+		try {
+			String filePath = this.openviduConfig.getOpenviduCdrPath() + "/" + event.getSessionId() + ".jsonl";
+			Files.write(
+				Paths.get(filePath),
+				(event.toString() + "\n").getBytes(),
+				StandardOpenOption.CREATE,
+				StandardOpenOption.APPEND
+			);
+		} catch (Exception e) {
+			log.info("{}", event);
+		}
 	}
 
 	@Override

@@ -2,7 +2,7 @@
 
 printf "\n"
 printf "\n  ======================================="
-printf "\n  =       LAUNCH OPENVIDU-SERVER        ="
+printf "\n  =   LAUNCHING SKAAS OPENVIDU-SERVER   ="
 printf "\n  ======================================="
 printf "\n"
 

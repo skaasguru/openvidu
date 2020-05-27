@@ -111,7 +111,7 @@ public class OpenViduServer implements JsonRpcConfigurer {
 		List<CDRLogger> loggers = new ArrayList<>();
 		if (openviduConfig.isCdrEnabled()) {
 			log.info("OpenVidu CDR service is enabled");
-			loggers.add(new CDRLoggerFile());
+			loggers.add(new CDRLoggerFile(openviduConfig));
 		} else {
 			log.info("OpenVidu CDR service is disabled (may be enable with 'OPENVIDU_CDR=true')");
 		}
